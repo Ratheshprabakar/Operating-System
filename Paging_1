@@ -1,0 +1,35 @@
+#include<stdio.h>
+void main()
+{
+    int pm,fs,p,s,c,lm[50],pt[50],i,free[50]={0},pm1[50],m=0,v=0;
+    printf("enter total physical memory:");
+    scanf("%d",&pm);
+    printf("enter frame size:");
+    scanf("%d",&fs);
+    printf("enter no of process:");
+    scanf("%d",&p);
+    printf("memory capacity for each process:");
+    scanf("%d",&c);
+    for(i=0;i<c;i++)
+        lm[i]=i;
+    //for(i=0;i<(c/fs);i++)
+    pt[0]=5;pt[1]=6;pt[2]=1;pt[3]=2;
+    for(i=0;i<c;i++)
+    {
+       s=(pt[m]*fs)+(i%4);
+       pm1[s]=lm[i];
+       free[s]=1;
+       v++;
+       if(v%4==0)
+         m++;
+    }
+    printf("FREE SPACES IN PHYSICAL MEMORY: ");
+    for(i=0;i<pm;i++)
+        if(free[i]!=1)
+          printf("%d ",i);
+    printf("\nPHYSICAL MEMORY WITH PROCESS:\n");
+    for(i=0;i<pm;i++)
+        if(free[i]!=0)
+           printf("%d  -  %d\n",i,pm1[i]);
+
+}
