@@ -1,0 +1,138 @@
+#include<stdio.h>
+#define max 100
+void paging()
+{
+ int psize,pn,pa[max],i,j=1,k=1,pb,tin,block[max],la[max],lna[max];
+ int n,pp[max],al[max],in[max],ex=0,c;
+ printf("\n-------------------------------Paging-----------------------------------");
+ printf("\nEnter total memory size in bytes = ");
+ scanf("%d",&psize);
+ printf("\nEnter size of a block = ");
+ scanf("%d",&pb);
+ pn=psize/pb;
+ for(i=1;i<=pn;i++)
+ {
+  block[i]=pb;
+ }
+ printf("\nEnter total number of processes = ");
+ scanf("%d",&n);
+ for(i=1;i<=n;i++)
+  {
+   printf("\nEnter size for process-%d = ",i);
+   scanf("%d",&pp[i]);
+  }
+ c=pn;
+ for(i=1;i<=n;i++)
+ {
+ if(c!=0)
+ {
+  if(pp[i]<=pb)
+   {
+    al[i]=1;
+    in[i]=pb-pp[i];
+    tin=tin+in[i];
+    c++;
+   }
+  else
+  {
+   al[i]=0;
+   in[i]=0;
+   ex=ex+pp[i];
+  }
+ }
+ else
+  {
+   al[i]=0;
+   in[i]=0;
+   ex=ex+pp[i];
+  }
+ }
+ printf("\n\nProcess\tSizeReq\tAllocation\tInternalFragmentation\n");
+ for(i=1;i<=n;i++)
+ {
+  printf("  P-%d  \t%d\t",i,pp[i]);
+  if(al[i]==1)
+   printf("YES\t\t");
+  else
+   printf("NO\t\t");
+  printf("%d\n",in[i]);
+ }
+// printf("\nTotal internal fragmentation = %d\n",tin);
+printf("\nTotal external fragmentation = %d\n",ex);
+ for(i=1;i<=n;i++)
+ {
+  if(al[i]==1)
+  {
+   la[j]=i;
+   j++;
+  }
+ }
+ for(i=1;i<=n;i++)
+ {
+  if(al[i]!=0)
+  {
+   lna[k]=i;
+   k++;
+  }
+ }
+ /*printf("\nList of processes for whom memory is ALLOCATED :");
+ for(i=1;i<j;i++)
+  printf("\n%d . Process-%d",i,la[i]);
+ printf("\nList of processes for whom memory is  NOT ALLOCATED :");
+ for(i=1;i<k;i++)
+  printf("\n%d . Process-%d",i,lna[k]);*/
+}
+void segmentation()
+{
+ int psize,pa[max],i,t,n;
+ int ex=0,pp[max],al[max];
+ printf("\n----------------------------Segmentation--------------------------------");
+ printf("\nEnter total memory size in bytes = ");
+ scanf("%d",&psize);
+ printf("\nEnter total number of processes = ");
+ scanf("%d",&n);
+ for(i=1;i<=n;i++)
+  {
+   printf("\nEnter size required for process-%d = ",i);
+   scanf("%d",&pp[i]);
+  }
+ for(i=1;i<=n;i++)
+ {
+  if(pp[i]<=psize)
+   {
+    al[i]=1;
+    psize=psize-pp[i];
+   }
+  else
+  {
+   al[i]=0;
+   ex=ex+pp[i];
+  }
+ }
+ printf("\n\nProcess\tSizeReq\tAllocation\n");
+ for(i=1;i<=n;i++)
+ {
+  printf("  P-%d  \t%d\t",i,pp[i]);
+  if(al[i]==1)
+   printf("YES\n");
+  else
+   printf("NO\n");
+ }
+ printf("\nTotal external fragmentation = %d\n",ex);
+printf("\nTotal Internal fragmentation = %d\n", psize);
+}
+void main()
+{
+ int choice;
+ printf("---------------------Paging and Segmentation---------------------------");
+ do
+ {
+ printf("\n\nEnter your choice :\n1-for Paging\n2-for Segmentation\n3-to exit\n");
+ scanf("%d",&choice);
+ switch(choice)
+  {
+   case 1:paging();break;
+   case 2:segmentation();break;
+  }
+ }while(choice!=3);
+}
